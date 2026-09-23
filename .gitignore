@@ -16,7 +16,8 @@ dist/
 .vscode/
 .codex/
 .agents/
-/docs/
+/docs/*
+!/docs/screenshots/
 test/
 tests/
 /scripts/

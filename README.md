@@ -15,6 +15,22 @@
 - 文档处理在本机完成；索引和操作记录默认保存在 `~/.doccollector/`。
   Document processing stays on the local machine. The index and operation log are stored under `~/.doccollector/` by default.
 
+## 界面预览 / Interface preview
+
+主界面展示索引结果与搜索入口。The main window shows indexed results and search controls.
+
+![DocCollector 主界面与搜索结果 / Main window and search results](docs/screenshots/01_main_results.png)
+
+命中预览显示匹配片段，便于确认要归集的文件。Hit previews show matching text before collecting files.
+
+![DocCollector 命中预览 / Hit preview](docs/screenshots/03_hit_preview.png)
+
+归集计划会在复制或移动前列出目标与命名冲突。The collection plan lists destinations and name conflicts before copying or moving.
+
+![DocCollector 归集计划 / Collection plan](docs/screenshots/04_collection_plan.png)
+
+更多界面截图 / More screenshots: [展开的筛选条件 / expanded filters](docs/screenshots/02_filters_expanded.png)、[紧凑窗口 / compact window](docs/screenshots/05_compact_window.png)、[紧凑窗口大字体 / compact window with larger text](docs/screenshots/06_compact_large_font.png)。
+
 ## 安装与启动 / Install and run
 
 需要 Windows 和 Python 3.10+。在项目目录运行：
