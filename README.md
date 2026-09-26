@@ -1,8 +1,12 @@
 # DocCollector
 
-**中文简介：** DocCollector 是一款本地运行的 Windows 文档检索与归集工具，可扫描目录、建立索引、搜索正文或文件名，并按计划复制或移动文件。
+### Find and collect local documents on Windows
 
-**English summary:** DocCollector is a local Windows app for indexing and searching documents, then collecting selected files by copying or moving them.
+**Search document text and filenames, preview matching passages, then review a copy or move plan before collecting selected files. Indexing and document processing stay on your computer.**
+
+**在 Windows 本机检索文档正文和文件名，查看命中片段，再预览复制或移动计划，将选中的文件集中归档。索引与文档处理均在本机完成。**
+
+[Install and run / 安装与启动](#安装与启动--install-and-run) · [Interface preview / 界面预览](#界面预览--interface-preview)
 
 ## 功能 / Features
 
