@@ -35,6 +35,8 @@
 
 更多界面截图 / More screenshots: [展开的筛选条件 / expanded filters](docs/screenshots/02_filters_expanded.png)、[紧凑窗口 / compact window](docs/screenshots/05_compact_window.png)、[紧凑窗口大字体 / compact window with larger text](docs/screenshots/06_compact_large_font.png)。
 
+![DocCollector](docs/screenshots/cartoon-infographic.png)
+
 ## 安装与启动 / Install and run
 
 需要 Windows 和 Python 3.10+。在项目目录运行：
