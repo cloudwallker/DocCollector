@@ -13,19 +13,24 @@ from PySide6.QtWidgets import QApplication
 
 STYLE_SHEET = """
 QMainWindow, QDialog {
-    background-color: #F5F7FB;
+    background-color: #F1F5FA;
     color: #1A2B46;
 }
 QLabel {
     color: #253750;
 }
+QLabel[role="productTitle"] {
+    color: #162A47;
+    font-size: 24px;
+    font-weight: 700;
+}
 QLabel[role="sectionTitle"] {
     color: #162A47;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
 }
 QLabel[role="muted"] {
-    color: #607188;
+    color: #4F6178;
 }
 QLabel[role="status"] {
     color: #245792;
@@ -38,7 +43,7 @@ QFrame[role="card"] {
 }
 
 QMenuBar {
-    background-color: #F5F7FB;
+    background-color: #F1F5FA;
     color: #253750;
     border-bottom: 1px solid #E2E8F1;
     padding: 3px 7px;
@@ -72,7 +77,7 @@ QPushButton {
     border: 1px solid #CCD8E7;
     border-radius: 7px;
     padding: 6px 12px;
-    min-height: 26px;
+    min-height: 30px;
 }
 QPushButton:hover {
     background-color: #EDF4FE;
@@ -83,7 +88,8 @@ QPushButton:pressed, QPushButton:checked {
     border-color: #6E9CD9;
 }
 QPushButton:focus {
-    border-color: #2468CB;
+    border-color: #164F9D;
+    background-color: #E3EEFF;
 }
 QPushButton:disabled {
     background-color: #F0F3F7;
@@ -106,6 +112,7 @@ QPushButton[variant="primary"]:pressed {
 }
 QPushButton[variant="primary"]:focus {
     border-color: #113C7B;
+    background-color: #164A92;
 }
 QPushButton[variant="primary"]:disabled {
     background-color: #D8E3F2;
@@ -177,7 +184,7 @@ QPlainTextEdit, QTextEdit, QListWidget {
     selection-color: #1A2B46;
 }
 QPlainTextEdit:focus, QTextEdit:focus, QListWidget:focus {
-    border-color: #86AEE3;
+    border-color: #164F9D;
 }
 QListWidget::item {
     padding: 5px;
@@ -266,8 +273,8 @@ QProgressBar::chunk {
     border-radius: 6px;
 }
 QStatusBar {
-    background-color: #F5F7FB;
-    color: #607188;
+    background-color: #F1F5FA;
+    color: #4F6178;
     border-top: 1px solid #E0E7F0;
 }
 QStatusBar::item {
@@ -287,13 +294,13 @@ def apply_theme(app: QApplication) -> None:
     app.setStyle("Fusion")
 
     font = app.font()
-    if 0 < font.pointSize() < 10:
-        font.setPointSize(10)
+    if 0 < font.pointSize() < 11:
+        font.setPointSize(11)
         app.setFont(font)
 
     palette = QPalette()
     colors = {
-        QPalette.Window: "#F5F7FB",
+        QPalette.Window: "#F1F5FA",
         QPalette.WindowText: "#1A2B46",
         QPalette.Base: "#FFFFFF",
         QPalette.AlternateBase: "#F8FAFD",
@@ -303,11 +310,11 @@ def apply_theme(app: QApplication) -> None:
         QPalette.Highlight: "#245FB8",
         QPalette.HighlightedText: "#FFFFFF",
         QPalette.Link: "#245FB8",
-        QPalette.PlaceholderText: "#71839B",
+        QPalette.PlaceholderText: "#53677F",
         QPalette.Light: "#FFFFFF",
         QPalette.Midlight: "#E8EDF5",
         QPalette.Mid: "#CBD6E5",
-        QPalette.Dark: "#607188",
+        QPalette.Dark: "#4F6178",
     }
     for role, hex_color in colors.items():
         palette.setColor(role, QColor(hex_color))

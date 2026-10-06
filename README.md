@@ -8,6 +8,10 @@
 
 [Install and run / 安装与启动](#安装与启动--install-and-run) · [Interface preview / 界面预览](#界面预览--interface-preview)
 
+搜索区域具有可见标签、键盘顺序和控件名称；索引操作与归集操作分组显示，复制前仍先预览计划。界面保留本地处理方式。
+
+The search area has visible labels, keyboard order and accessible control names. Indexing and collection actions are grouped, and copying still requires reviewing a plan first. Document processing remains local.
+
 ## 功能 / Features
 
 - 支持 `.txt`、`.md`、`.json`、`.csv`、`.pdf`、`.docx`；PDF 仅提取文字层，不提供 OCR。

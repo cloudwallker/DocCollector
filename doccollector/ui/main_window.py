@@ -593,7 +593,7 @@ class MainWindow(QMainWindow):
     def __init__(self, db: IndexDatabase | None = None):
         super().__init__()
         self.setWindowTitle("DocCollector")
-        self.resize(1000, 680)
+        self.resize(1120, 740)
         self.setMinimumSize(800, 520)
 
         self.db = db or IndexDatabase()
@@ -642,11 +642,11 @@ class MainWindow(QMainWindow):
 
         header = QHBoxLayout()
         heading = QVBoxLayout()
-        heading.setSpacing(1)
+        heading.setSpacing(4)
         title = QLabel("DocCollector")
-        title.setStyleSheet("font-size: 20px; font-weight: 700; color: #162A47;")
+        title.setProperty("role", "productTitle")
         heading.addWidget(title)
-        subtitle = QLabel("本地文档检索与归集")
+        subtitle = QLabel("先检索，再预览，最后归集 · 文档留在本机")
         subtitle.setProperty("role", "muted")
         heading.addWidget(subtitle)
         header.addLayout(heading)
@@ -659,9 +659,14 @@ class MainWindow(QMainWindow):
         root.addLayout(header)
 
         # Search row
+        search_label = QLabel("检索文档")
+        search_label.setProperty("role", "sectionTitle")
+        root.addWidget(search_label)
         search_row = QHBoxLayout()
         self.mode_combo = QComboBox()
         self.mode_combo.setMinimumWidth(126)
+        self.mode_combo.setAccessibleName("搜索范围")
+        self.mode_combo.setToolTip("选择正文、文件名或两者")
         for label, _ in MODE_LABELS:
             self.mode_combo.addItem(label)
         self.mode_combo.currentIndexChanged.connect(self._on_filter_changed)
@@ -669,6 +674,8 @@ class MainWindow(QMainWindow):
 
         self.search_input = QLineEdit()
         self.search_input.setPlaceholderText("输入关键词…（Enter 立即搜索，Esc 取消）")
+        self.search_input.setAccessibleName("文档检索关键词")
+        search_label.setBuddy(self.search_input)
         self.search_input.setClearButtonEnabled(True)
         self.search_input.textChanged.connect(self._on_search_text_changed)
         self.search_input.returnPressed.connect(self._on_search_return)
@@ -700,6 +707,11 @@ class MainWindow(QMainWindow):
         action_row.addWidget(self.update_index_btn)
         action_row.addWidget(self.cancel_btn)
         action_row.addStretch()
+        index_label = QLabel("索引")
+        index_label.setProperty("role", "muted")
+        action_row.insertWidget(0, index_label)
+        self.scan_dirs_btn.setToolTip("添加要检索的本地目录；首次使用从这里开始")
+        self.update_index_btn.setToolTip("重新检查已添加目录，更新新增或修改的文件")
         root.addLayout(action_row)
 
         # Progress
@@ -719,6 +731,7 @@ class MainWindow(QMainWindow):
 
         # Side-by-side result list and indexed-content preview.
         self.splitter = QSplitter(Qt.Horizontal)
+        self.splitter.setChildrenCollapsible(False)
         result_panel = QWidget()
         result_layout = QVBoxLayout(result_panel)
         result_layout.setContentsMargins(0, 0, 0, 0)
@@ -743,6 +756,8 @@ class MainWindow(QMainWindow):
         self.results_view.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.results_view.setSortingEnabled(True)
         self.results_view.setAlternatingRowColors(True)
+        self.results_view.setAccessibleName("文档检索结果，可选择多项并预览")
+        self.results_view.verticalHeader().setDefaultSectionSize(36)
         self.results_view.verticalHeader().setVisible(False)
         self.results_view.setEditTriggers(QAbstractItemView.NoEditTriggers)
         header = self.results_view.horizontalHeader()
@@ -797,16 +812,21 @@ class MainWindow(QMainWindow):
 
         self.structure_combo = QComboBox()
         self.structure_combo.addItems(["平铺", "保留目录结构"])
+        self.structure_combo.setAccessibleName("归集目录结构")
         bottom.addWidget(QLabel("结构:"))
         bottom.addWidget(self.structure_combo)
         self.conflict_combo = QComboBox()
         self.conflict_combo.addItems(["跳过", "替换", "保留两者"])
+        self.conflict_combo.setAccessibleName("同名文件处理方式")
         bottom.addWidget(QLabel("冲突:"))
         bottom.addWidget(self.conflict_combo)
 
         self.copy_btn = QPushButton("复制到…")
+        self.copy_btn.setProperty("variant", "primary")
+        self.copy_btn.setToolTip("先查看归集计划，再复制选中文件")
         self.copy_btn.clicked.connect(lambda: self._on_collect(CollectMode.COPY))
         self.move_btn = QPushButton("移动到…")
+        self.move_btn.setToolTip("先查看归集计划，再移动选中文件")
         self.move_btn.clicked.connect(lambda: self._on_collect(CollectMode.MOVE))
         self.copy_btn.setEnabled(False)
         self.move_btn.setEnabled(False)
@@ -814,7 +834,12 @@ class MainWindow(QMainWindow):
         bottom.addWidget(self.move_btn)
         root.addLayout(bottom)
 
-        self.statusBar().showMessage("就绪")
+        self.setTabOrder(self.mode_combo, self.search_input)
+        self.setTabOrder(self.search_input, self.search_btn)
+        self.setTabOrder(self.search_btn, self.filter_btn)
+        self.setTabOrder(self.filter_btn, self.scan_dirs_btn)
+        self.search_input.setFocus()
+        self.statusBar().showMessage("Enter 搜索 · Esc 取消 · 先选中文件，再预览归集计划")
 
         self._debounce = QTimer(self)
         self._debounce.setSingleShot(True)
